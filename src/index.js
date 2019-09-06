@@ -6,17 +6,5 @@ import App from './components/App';
 // CSS
 import './index.css'
 
-const rootEl = document.getElementById('root');
-
-let render = ()=>{
-    ReactDOM.render(<App />, rootEl)
-}
-
-if(module.hot){
-    module.hot.accept('./components/App', ()=>{
-        setTimeout(render);
-    })
-}
-
-render();
+ReactDOM.render(<App />, document.querySelector("#root"));
 
