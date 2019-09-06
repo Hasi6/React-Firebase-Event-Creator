@@ -6,21 +6,22 @@ import { NavLink, withRouter } from "react-router-dom";
 import SignedOutMenu from "../Menus/SignedOutMenu";
 import SignedInMenu from "../Menus/SignedInMenu";
 
-const NavBar = ({history}) => {
+const NavBar = ({ history }) => {
   const [authenticate, setAuthenticate] = useState(false);
 
-  const handleSignIn = () =>{
+  const handleSignIn = () => {
     setAuthenticate(true);
-  }
+  };
 
-  const handleSignOut = () =>{
+  const handleSignOut = () => {
     setAuthenticate(false);
-    return history.push('/')
-  }
+    return history.push("/");
+  };
 
   return (
     <Menu inverted fixed="top">
       <Container>
+        <Menu.Item as={NavLink} exact to="/test" name="Test" />
         <Menu.Item as={NavLink} exact to="/" header>
           <img src="assets/images/logo.png" alt="logo" />
           Event Creator
@@ -38,7 +39,11 @@ const NavBar = ({history}) => {
             content="Create Event"
           />
         </Menu.Item>
-        {authenticate ? <SignedInMenu signOut={handleSignOut}/> : <SignedOutMenu signIn={handleSignIn}/>}
+        {authenticate ? (
+          <SignedInMenu signOut={handleSignOut} />
+        ) : (
+          <SignedOutMenu signIn={handleSignIn} />
+        )}
       </Container>
     </Menu>
   );
