@@ -1,8 +1,22 @@
-import React from "react";
+import React, { useState } from "react";
 import { Menu, Container, Button } from "semantic-ui-react";
-import { NavLink } from "react-router-dom";
+import { NavLink, withRouter } from "react-router-dom";
 
-const NavBar = () => {
+// Created Components
+import SignedOutMenu from "../Menus/SignedOutMenu";
+import SignedInMenu from "../Menus/SignedInMenu";
+
+const NavBar = ({history}) => {
+  const [authenticate, setAuthenticate] = useState(false);
+
+  const handleSignIn = () =>{
+    setAuthenticate(true);
+  }
+
+  const handleSignOut = () =>{
+    setAuthenticate(false);
+    return history.push('/')
+  }
 
   return (
     <Menu inverted fixed="top">
@@ -14,20 +28,20 @@ const NavBar = () => {
         <Menu.Item as={NavLink} exact to="/events" name="Events" />
         <Menu.Item as={NavLink} exact to="/people" name="People" />
         <Menu.Item>
-          <Button as={NavLink} exact to="/createEvent" floated="right" positive inverted content="Create Event" />
-        </Menu.Item>
-        <Menu.Item position="right">
-          <Button basic inverted content="Login" />
           <Button
-            basic
+            as={NavLink}
+            exact
+            to="/createEvent"
+            floated="right"
+            positive
             inverted
-            content="Sign Out"
-            style={{ marginLeft: "0.5em" }}
+            content="Create Event"
           />
         </Menu.Item>
+        {authenticate ? <SignedInMenu signOut={handleSignOut}/> : <SignedOutMenu signIn={handleSignIn}/>}
       </Container>
     </Menu>
   );
 };
 
-export default NavBar;
+export default withRouter(NavBar);
