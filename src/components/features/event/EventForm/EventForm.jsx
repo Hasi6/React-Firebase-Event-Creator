@@ -12,10 +12,11 @@ const EventForm = ({ isOpen, hideForm, newEvent, selectedEvent, updateEvents }) 
   const onChange = (e, name) => {
     name(e.target.value);
   };
-  console.log(selectedEvent);
+  console.log(isOpen);
   const renderData = () => {
-    if (selectedEvent !== null) {
-      const { title, date, city, venue, hostedBy } = selectedEvent;
+    if (selectedEvent !== undefined) {
+      if(selectedEvent !== null){
+        const { title, date, city, venue, hostedBy } = selectedEvent;
       setEventTitle(title);
       setEventDate(date);
       setEventCity(city);
@@ -28,6 +29,7 @@ const EventForm = ({ isOpen, hideForm, newEvent, selectedEvent, updateEvents }) 
       setEventVenue("");
       setEventHostedBy("");
     }
+      }
   };
 
   useEffect(() => {
@@ -54,7 +56,7 @@ const EventForm = ({ isOpen, hideForm, newEvent, selectedEvent, updateEvents }) 
   };
 
   const showForm = () => {
-    if (isOpen) {
+    if (isOpen || isOpen === undefined) {
       return (
         <Segment>
           <Form onSubmit={e => onSubmit(e)} autoComplete="off">
