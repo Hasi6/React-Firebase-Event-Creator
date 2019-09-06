@@ -12,7 +12,6 @@ import PeopleDashBoard from "./user/PeopleDashBoard/PeopleDashBoard";
 import SettingsDashBoard from "./user/Settings/SettingsDashBoard";
 import UserDetailedPage from "./user/UserDetailed/UserDetailedPage";
 import EventForm from "./features/event/EventForm/EventForm";
-import TestComponent from "./features/testarea/TestComponent";
 
 // Redux Store
 import { configureStore } from "../store/configureStore";
@@ -45,7 +44,6 @@ const App = () => {
                     />
                     <Route path="/settings" component={SettingsDashBoard} />
                     <Route path="/createEvent" exact component={EventForm} />
-                    <Route path="/test" exact component={TestComponent} />
                   </Switch>
                 </Container>
               </Fragment>

@@ -1,105 +1,86 @@
-import React, { Component } from "react";
+import React, { useState, useEffect } from "react";
 import { Grid, Button } from "semantic-ui-react";
+import { connect } from "react-redux";
 
 // created components
 import EventList from "../EventList/EventList";
 import EventForm from "../EventForm/EventForm";
 
+// Redux
+import {
+  createEvent,
+  deleteEvent,
+  updateEvent
+} from "../../../../actions/events/eventActions";
 
-import Events from "./EventListArray";
+const EventDashboard = ({ events, updateEvent, createEvent, deleteEvent }) => {
+  const [isOpen, setIsOpen] = useState(false);
+  const [selectedEvent, setSelectedEvent] = useState(null);
 
 
-class EventDashboard extends Component {
+  const handleNewEvent = newEvent => {
+    createEvent(newEvent);
+    setIsOpen(false);
+  };
 
-  state = {
-    events: Events,
-    isOpen: false,
-    selectedEvent: null
-  }
-  
+  const handleCreateFormOpen = () => {
+    setSelectedEvent(null);
+    setIsOpen(true);
+  };
 
-   handleNewEvent = (newEvent)=>{
-    const {events} = this.state
-    this.setState({
-      events: [...events,newEvent],
-      isOpen: false,
-    });
-  }
-  
+  const handleFormCancel = () => {
+    setIsOpen(false);
+    setSelectedEvent(null);
+  };
 
-  //  formOpen = () => {
-  //   this.setState({
-  //     isOpen: !this.state.isOpen
-  //   })
-  // };
+  const handleUpdateEvents = updatedEvent => {
+    updateEvent(updatedEvent);
+    setSelectedEvent(null);
+    setIsOpen(false);
+  };
+  const handleSelectEvent = event => {
+    setSelectedEvent(event);
+    setIsOpen(true);
+  };
 
-  handleCreateFormOpen = ()=>{
-    this.setState({
-      isOpen: true,
-      selectedEvent: null
-    })
-  }
+  const deleteEvents = deleteEvents => {
+    deleteEvent(deleteEvents);
+  };
 
-  handleFormCancel = ()=>{
-    this.setState({
-      isOpen: false,
-      selectEvent: null
-    })
-  }
-
-  handleUpdateEvents = (updatedEvent)=>{
-    this.setState(({events})=>({
-      events: events.map(event => {
-        if(event.id === updatedEvent.id){
-          return {...updatedEvent}
-        }return event
-      }),
-      isOpen: false,
-      selectedEvent: null
-    }))
-  }
-  handleSelectEvent = (event)=>{
-    this.setState({
-      selectedEvent: event,
-      isOpen: true
-    });
-  }
-
-  deleteEvent = (deleteEvent)=>{
-    let allEvents = this.state.events
-    allEvents.map((event, index) => {
-        if(event.id === deleteEvent.id){
-          allEvents.splice(index,1);
-          return this.setState({
-            events: allEvents,
-            isOpen: false,
-      selectedEvent: null
-          })
-        }return this.setState({
-          isOpen: false,
-      selectedEvent: null
-        })
-      })
-  }
-
-  render () {
-    const {events, isOpen, selectedEvent} = this.state
-    return (
-      <Grid>
-        <Grid.Column width={10}>
-          <EventList events={events} selectEvent={this.handleSelectEvent} deleteEvent={this.deleteEvent}/>
-        </Grid.Column>
-        <Grid.Column width={6}>
-          <Button
-            onClick={() => this.handleCreateFormOpen()}
-            positive
-            content={'Create Event'}
-          ></Button>
-          <EventForm isOpen={isOpen} hideForm={this.handleFormCancel} newEvent={this.handleNewEvent} selectedEvent={selectedEvent} updateEvents={this.handleUpdateEvents}/>
-        </Grid.Column>
-      </Grid>
-    );
-  }
+  return (
+    <Grid>
+      <Grid.Column width={10}>
+        <EventList
+          events={events}
+          selectEvent={handleSelectEvent}
+          deleteEvent={deleteEvents}
+        />
+      </Grid.Column>
+      <Grid.Column width={6}>
+        <Button
+          onClick={() => handleCreateFormOpen()}
+          positive
+          content={"Create Event"}
+        ></Button>
+        <EventForm
+          isOpen={isOpen}
+          hideForm={handleFormCancel}
+          newEvent={handleNewEvent}
+          selectedEvent={selectedEvent}
+          updateEvents={handleUpdateEvents}
+        />
+      </Grid.Column>
+    </Grid>
+  );
 };
 
-export default EventDashboard;
+const mapStateToProps = state => {
+  return {
+    events: state.events
+  };
+};
+
+export default connect(
+  mapStateToProps,
+  { createEvent, deleteEvent, updateEvent }
+)(EventDashboard);

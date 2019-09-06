@@ -1,9 +1,11 @@
 import { combineReducers } from "redux";
 
-import testReducer from "../components/features/testarea/testReducer";
+// Reducers
+import eventsReducer from "./events/eventReducer";
+
 
 const rootReducer = combineReducers({
-    testReducer
+    events : eventsReducer,
 })
 
 export default rootReducer;

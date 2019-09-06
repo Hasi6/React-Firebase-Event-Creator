@@ -1,8 +1,13 @@
 import React, { Fragment, useState, useEffect } from "react";
 import { Segment, Form, Button } from "semantic-ui-react";
 import cuid from "cuid";
+import {connect} from 'react-redux';
 
-const EventForm = ({ isOpen, hideForm, newEvent, selectedEvent, updateEvents }) => {
+// Redux
+import {createEvent, updateEvent, deleteEvent} from '../../../../actions/events/eventActions';
+
+
+const EventForm = ({ isOpen, hideForm, newEvent, selectedEvent, updateEvents, createEvent }) => {
   const [eventTitle, setEventTitle] = useState("");
   const [eventDate, setEventDate] = useState("");
   const [eventCity, setEventCity] = useState("");
@@ -12,7 +17,6 @@ const EventForm = ({ isOpen, hideForm, newEvent, selectedEvent, updateEvents }) 
   const onChange = (e, name) => {
     name(e.target.value);
   };
-  console.log(isOpen);
   const renderData = () => {
     if (selectedEvent !== undefined) {
       if(selectedEvent !== null){
@@ -48,7 +52,7 @@ const EventForm = ({ isOpen, hideForm, newEvent, selectedEvent, updateEvents }) 
     if(selectedEvent === null || selectedEvent === undefined){
       body.hostPhotoURL= "./assets/images/user.png"
       body.id = cuid();
-      return newEvent(body);
+      return createEvent(body);
     }
     body.id = selectedEvent.id
     body.hostPhotoURL= selectedEvent.hostPhotoURL;
@@ -121,4 +125,4 @@ const EventForm = ({ isOpen, hideForm, newEvent, selectedEvent, updateEvents }) 
 
   return <Fragment>{showForm()}</Fragment>;
 };
-export default EventForm;
+export default connect(null,{createEvent})(EventForm);

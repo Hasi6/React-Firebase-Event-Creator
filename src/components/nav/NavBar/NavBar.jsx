@@ -21,7 +21,6 @@ const NavBar = ({ history }) => {
   return (
     <Menu inverted fixed="top">
       <Container>
-        <Menu.Item as={NavLink} exact to="/test" name="Test" />
         <Menu.Item as={NavLink} exact to="/" header>
           <img src="assets/images/logo.png" alt="logo" />
           Event Creator
