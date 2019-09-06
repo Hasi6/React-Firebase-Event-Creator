@@ -1,9 +1,12 @@
-import React from 'react';
+import React, { Fragment } from 'react';
 import { Segment, Form, Button } from 'semantic-ui-react';
 
-const EventForm = ()=>{
-    return (
-              <Segment>
+const EventForm = ({isOpen, hideForm})=>{
+
+    const showForm = ()=>{
+        if(isOpen){
+            return (
+                <Segment>
                 <Form>
                   <Form.Field>
                     <label>Event Title</label>
@@ -28,9 +31,15 @@ const EventForm = ()=>{
                   <Button positive type="submit">
                     Submit
                   </Button>
-                  <Button type="button">Cancel</Button>
+                  <Button type="button" onClick={()=>{hideForm()}} >Cancel</Button>
                 </Form>
               </Segment>
+            )
+        }return null
+    }
+
+    return (
+          <Fragment>{showForm()}</Fragment>    
     )
 }
 export default EventForm

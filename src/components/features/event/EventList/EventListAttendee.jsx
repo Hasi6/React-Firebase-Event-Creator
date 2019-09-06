@@ -1,11 +1,10 @@
-import React from 'react';
-import { List, Image } from 'semantic-ui-react';
+import React, { Fragment } from "react";
+import { List, Image } from "semantic-ui-react";
 
-const EventListAttendee = ()=>{
-    return(
-        <List.Item>
-            <Image as='a' size='mini' rounded src='https://randomuser.me/api/portraits/women/42.jpg'/>
-        </List.Item> 
-    )
-}
+const EventListAttendee = ({ attendees }) => {
+
+  return (<List.Item>
+  <Image as="a" size="mini" rounded src={attendees.photoURL} />
+</List.Item>);
+};
 export default EventListAttendee;
