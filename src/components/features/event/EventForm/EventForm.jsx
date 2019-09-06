@@ -45,7 +45,7 @@ const EventForm = ({ isOpen, hideForm, newEvent, selectedEvent, updateEvents }) 
       venue: eventVenue,
       hostedBy: eventHostedBy,
     };
-    if(selectedEvent === null){
+    if(selectedEvent === null || selectedEvent === undefined){
       body.hostPhotoURL= "./assets/images/user.png"
       body.id = cuid();
       return newEvent(body);

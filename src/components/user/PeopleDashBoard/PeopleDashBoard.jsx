@@ -3,7 +3,7 @@ import React from 'react'
 const PeopleDashBoard = () => {
     return (
         <div>
-            
+            <h1>People</h1>
         </div>
     )
 }
