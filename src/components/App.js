@@ -1,5 +1,5 @@
 import React, { Fragment } from "react";
-import { BrowserRouter, Route } from "react-router-dom";
+import { BrowserRouter, Route, Switch } from "react-router-dom";
 
 // Created Components
 import EventDashboard from "./features/event/EventDashboard/EventDashboard";
@@ -23,12 +23,22 @@ const App = () => {
             <Fragment>
               <NavBar />
               <Container className="main">
-                <Route path="/events" exact component={EventDashboard} />
-                <Route path="/events/:id" exact component={EventDetailsPage} />
-                <Route path="/people" exact component={PeopleDashBoard} />
-                <Route path="/profile/:id" exact component={UserDetailedPage} />
-                <Route path="/settings" exact component={SettingsDashBoard} />
-                <Route path="/createEvent" exact component={EventForm} />
+                <Switch>
+                  <Route path="/events" exact component={EventDashboard} />
+                  <Route
+                    path="/events/:id"
+                    exact
+                    component={EventDetailsPage}
+                  />
+                  <Route path="/people" exact component={PeopleDashBoard} />
+                  <Route
+                    path="/profile/:id"
+                    exact
+                    component={UserDetailedPage}
+                  />
+                  <Route path="/settings" component={SettingsDashBoard} />
+                  <Route path="/createEvent" exact component={EventForm} />
+                </Switch>
               </Container>
             </Fragment>
           )}
