@@ -20,6 +20,7 @@ import {
 import TextInput from "../../../../common/form/TextInput";
 import TextArea from "../../../../common/form/TextArea";
 import SelectInput from "../../../../common/form/SelectInput";
+import DateInput from "../../../../common/form/DateInput";
 
 const category = [
   { key: "drinks", text: "Drinks", value: "drinks" },
@@ -38,7 +39,8 @@ const validate = combineValidators({
     hasLengthGreaterThan(4)({message: 'Description needs to be at least 5 Characters'})
   )(),
   city: isRequired('city'),
-  venue: isRequired('venue')
+  venues: isRequired('venue'),
+  date: isRequired('date')
 })
 
 const EventForm = ({
@@ -52,7 +54,24 @@ const EventForm = ({
   pristine
 }) => {
 
+  const formatDate = (date)=>{
+    var d = new Date(date),
+        month = '' + (d.getMonth() + 1),
+        day = '' + d.getDate(),
+        year = d.getFullYear();
+
+    if (month.length < 2) month = '0' + month;
+    if (day.length < 2) day = '0' + day;
+
+    return [year, month, day].join('-');
+  }
+
   const onSubmit = values => {
+
+    const formatedDate = formatDate(values.date);
+
+    values.date = formatedDate
+
     if (initialValues.id) {
       updateEvent(values);
       return history.push(`/events/${initialValues.id}`);
@@ -99,7 +118,7 @@ const EventForm = ({
               <Header sub color="teal" content="Event Location Details" />
               <Field name="city" component={TextInput} placeholder="Location" />
               <Field name="venue" component={TextInput} placeholder="Venue" />
-              <Field name="date" component={TextInput} placeholder="Date" />
+              <Field name="date" component={DateInput} placeholder="Date" />
               <Button positive type="submit" disabled={invalid || submitting || pristine}>
                 Submit
               </Button>

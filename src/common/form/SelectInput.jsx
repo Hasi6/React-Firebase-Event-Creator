@@ -19,7 +19,7 @@ const SelectInput = ({
             options={options}
             multiple={multiple}
         />
-        {touched && error && <Label basic color='red'>{error}</Label>}
+        {touched && error && <Label basic color='red' pointing>{error}</Label>}
       </Form.Field>
   );
 };
