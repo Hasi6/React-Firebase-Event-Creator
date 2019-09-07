@@ -74,7 +74,7 @@ const EventForm = ({
     return [year, month, day].join("-");
   };
 
-  const handleCitySelect = async selectedCity => {
+  const handleCitySelect = selectedCity => {
     geocodeByAddress(selectedCity)
       .then(results => getLatLng(results[0]))
       .then(latLng => setCityLatLng(latLng))
@@ -84,7 +84,7 @@ const EventForm = ({
       .catch(error => console.error("Error", error));
   };
 
-  const handleVenueSelect = async selectedVenue => {
+  const handleVenueSelect = selectedVenue => {
     geocodeByAddress(selectedVenue)
       .then(results => getLatLng(results[0]))
       .then(latLng => setVenueLatLng(latLng))
