@@ -2,7 +2,7 @@ const Events = [
     {
       id: '1',
       title: 'Trip to Tower of London',
-      date: '2018-03-27',
+      date: 'Sun Sep 22 2019 00:00:00 GMT+0530 (India Standard Time)',
       category: 'culture',
       description:
         'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus sollicitudin ligula eu leo tincidunt, quis scelerisque magna dapibus. Sed eget ipsum vel arcu vehicula ullamcorper.',
@@ -26,7 +26,7 @@ const Events = [
     {
       id: '2',
       title: 'Trip to Punch and Judy Pub',
-      date: '2018-03-28',
+      date: 'Sun Sep 22 2019 00:00:00 GMT+0530 (India Standard Time)',
       category: 'drinks',
       description:
         'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus sollicitudin ligula eu leo tincidunt, quis scelerisque magna dapibus. Sed eget ipsum vel arcu vehicula ullamcorper.',

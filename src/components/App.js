@@ -15,6 +15,7 @@ import EventForm from "./features/event/EventForm/EventForm";
 
 // Redux Store
 import { configureStore } from "../store/configureStore";
+import TestPlaceApi from "./features/testarea/TestPlaceApi";
 const store = configureStore;
 
 const App = ({location}) => {
@@ -47,6 +48,7 @@ const App = ({location}) => {
                       exact
                       component={EventForm}
                     />
+                    <Route path="/test" exact component={TestPlaceApi} />
                   </Switch>
                 </Container>
               </Fragment>

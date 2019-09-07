@@ -25,6 +25,7 @@ const NavBar = ({ history }) => {
           <img src="assets/images/logo.png" alt="logo" />
           Event Creator
         </Menu.Item>
+        <Menu.Item as={NavLink} exact to="/test" name="Test" />
         <Menu.Item as={NavLink} exact to="/events" name="Events" />
         <Menu.Item as={NavLink} exact to="/people" name="People" />
         <Menu.Item>
