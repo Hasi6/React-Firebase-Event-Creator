@@ -4,6 +4,7 @@ import PlacesAutocomplete, {
   getLatLng
 } from "react-places-autocomplete";
 import SimpleMap from "./SimpleMap";
+import DateTimePickerTest from "./DateTimePickerTest";
 
 class TestPlaceApi extends React.Component {
   constructor(props) {
@@ -73,6 +74,7 @@ class TestPlaceApi extends React.Component {
           )}
         </PlacesAutocomplete>
         <SimpleMap key={this.state.latLng.lat} latLng={this.state.latLng}/>
+        <DateTimePickerTest />
       </Fragment>
     );
   }

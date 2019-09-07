@@ -2,7 +2,7 @@ const Events = [
   {
     id: "1",
     title: "Trip to Empire State building",
-    date: "2018-03-21",
+    date: "2001-09-28",
     category: "culture",
     description:
       "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus sollicitudin ligula eu leo tincidunt, quis scelerisque magna dapibus. Sed eget ipsum vel arcu vehicula ullamcorper.",
@@ -30,7 +30,7 @@ const Events = [
   {
     id: "2",
     title: "Trip to Punch and Judy Pub",
-    date: "2018-03-18",
+    date: "2001-09-28",
     category: "drinks",
     description:
       "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus sollicitudin ligula eu leo tincidunt, quis scelerisque magna dapibus. Sed eget ipsum vel arcu vehicula ullamcorper.",

@@ -62,17 +62,6 @@ const EventForm = ({
   const [cityLatLng, setCityLatLng] = useState({});
   const [venueLatLng, setVenueLatLng] = useState({});
 
-  const formatDate = date => {
-    var d = new Date(date),
-      month = "" + (d.getMonth() + 1),
-      day = "" + d.getDate(),
-      year = d.getFullYear();
-
-    if (month.length < 2) month = "0" + month;
-    if (day.length < 2) day = "0" + day;
-
-    return [year, month, day].join("-");
-  };
 
   const handleCitySelect = selectedCity => {
     geocodeByAddress(selectedCity)
@@ -95,14 +84,11 @@ const EventForm = ({
   };
 
   const onSubmit = values => {
-    const formatedDate = formatDate(values.date);
-    values.date = formatedDate;
-    values.venueLatLng = venueLatLng;
-
     if (initialValues.id) {
       updateEvent(values);
       return history.push(`/events/${initialValues.id}`);
     } else {
+      values.venueLatLng = venueLatLng;
       let value = {
         ...values,
         hostPhotoURL: "./assets/images/user.png",
@@ -110,10 +96,8 @@ const EventForm = ({
         attendees: []
       };
       createEvent(value);
-      console.log(value);
       return history.push(`/events/${value.id}`);
     }
-    console.log(values);
   };
 
   const showForm = () => {
@@ -132,7 +116,7 @@ const EventForm = ({
                 name="category"
                 component={SelectInput}
                 options={category}
-                // multiple={true}
+                multiple={true}
                 placeholder="Event Category"
               />
               <Field
@@ -151,15 +135,23 @@ const EventForm = ({
               />
               <Field
                 name="venue"
-                options={{ location: new google.maps.LatLng(cityLatLng),
-                radius: 1000,
-                types: ['establishment']
+                options={{
+                  location: new google.maps.LatLng(cityLatLng),
+                  radius: 1000,
+                  types: ["establishment"]
                 }}
                 onSelect={handleVenueSelect}
                 component={PlaceInput}
                 placeholder="Venue"
               />
-              <Field name="date" component={DateInput} placeholder="Date" />
+              <Field
+                name="date"
+                component={DateInput}
+                placeholder="Date"
+                dateFormat="dd LLL yyyy h:mm a"
+                showTimeSelect
+                timeFormat='HH:mm'
+              />
               <Button
                 positive
                 type="submit"

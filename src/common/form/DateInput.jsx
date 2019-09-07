@@ -1,29 +1,24 @@
 import React from 'react'
 import { Form, Label } from 'semantic-ui-react';
-import DayPickerInput from 'react-day-picker/DayPickerInput';
-import 'react-day-picker/lib/style.css';
+import DatePicker from "react-datepicker";
+import "react-datepicker/dist/react-datepicker.css";
 
- 
-const DateInput = ({input, width, placeholder, dateFormat,meta: {touched, onBlur, error}}) => {
+const DateInput = ({input, width, placeholder, dateFormat,meta: {touched, onBlur, error}, ...rest}) => {
     console.log(typeof input.value);
     console.log(input.value);
     return (
         <Form.Field error={touched && error}>
-            <DayPickerInput 
-            inputProps={{readOnly: true}}
-            dayPickerProps={{
-                month: new Date(2018, 10),
-                showWeekNumbers: true,
-                todayButton: 'Today',
-              }}
+            <DatePicker 
+            {...rest}
+            dateFormat={dateFormat}
                 placeholderText={placeholder}
                 onDayChange={input.onChange}
-                value={input.value ? new Date(input.value) : null}
+                selected={input.value ? new Date(input.value) : null}
+                onChange={input.onChange}
                 onBlur={input.onBlur}
-                dateFormat={dateFormat}
                 onChangeRaw = {(e)=> e.preventDefault(e)}
             />
-            {onBlur && error && <Label basic color='red' pointing>{error}</Label>}
+            {touched && error && <Label basic color='red' pointing>{error}</Label>}
         </Form.Field>
     )
 }
