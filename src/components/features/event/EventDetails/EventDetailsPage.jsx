@@ -9,7 +9,6 @@ import EventsDetailsChat from "./EventsDetailsChat";
 import EventDetailsSideBar from "./EventDetailsSideBar";
 
 const EventDetailsPage = ({ event }) => {
-  console.log(event);
   return (
     <Fragment>
       {event !== undefined ? (

@@ -5,7 +5,7 @@ const EventList = ({events, selectEvent,deleteEvent})=>{
     return(
         <Fragment>
             {events.map((event)=>{
-                return <EventListItem key={event.id} events={event} deleteEvent={deleteEvent}/>
+                return <EventListItem key={event.id} events={event}/>
             })}
         </Fragment>
     )

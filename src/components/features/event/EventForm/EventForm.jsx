@@ -1,7 +1,8 @@
-import React, { Fragment, useState } from "react";
+import React, { Fragment, useState, useEffect } from "react";
 import { Segment, Form, Button } from "semantic-ui-react";
 import cuid from "cuid";
 import { connect } from "react-redux";
+import { Redirect } from "react-router-dom";
 
 // Redux
 import {
@@ -9,8 +10,7 @@ import {
   updateEvent
 } from "../../../../actions/events/eventActions";
 
-const EventForm = ({ event, history, createEvent, updateEvent }) => {
-  console.log(event.id);
+const EventForm = ({ event, history, createEvent, updateEvent, match }) => {
 
   const [eventTitle, setEventTitle] = useState(event.title);
   const [eventDate, setEventDate] = useState(event.date);
@@ -22,6 +22,14 @@ const EventForm = ({ event, history, createEvent, updateEvent }) => {
     name(e.target.value);
   };
 
+  useEffect(() => {
+    setEventTitle(event.title);
+    setEventDate(event.date);
+    setEventCity(event.city);
+    setEventVenue(event.venue);
+    setEventHostedBy(event.hostedBy);
+  }, [match.path]);
+
   const onSubmit = e => {
     e.preventDefault();
     const body = {
@@ -32,17 +40,26 @@ const EventForm = ({ event, history, createEvent, updateEvent }) => {
       hostedBy: eventHostedBy
     };
     if (event.id === undefined) {
-      body.hostPhotoURL = "./assets/images/user.png";
-      body.id = cuid();
-      body.attendees = [];
-      return createEvent(body);
+      let newBody = {
+        ...body,
+        hostPhotoURL: "./assets/images/user.png",
+        id: cuid(),
+        attendees: []
+      };
+
+      createEvent(newBody);
+      return history.push(`/events/${newBody.id}`);
     }
-    body.id = event.id;
-    body.hostPhotoURL = event.hostPhotoURL;
-    body.attendees = event.attendees;
-    body.description = event.description;
-    body.category = event.category;
-    return updateEvent(body);
+    let newBody = {
+      ...body,
+      hostPhotoURL: event.hostPhotoURL,
+      id: event.id,
+      attendees: event.attendees,
+      description: event.description,
+      category: event.category
+    };
+    updateEvent(newBody);
+    return history.push(`/events/${event.id}`);
   };
 
   const showForm = () => {
