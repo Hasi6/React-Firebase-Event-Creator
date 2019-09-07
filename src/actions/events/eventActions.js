@@ -8,6 +8,7 @@ export const createEvent = event => {
 };
 
 export const updateEvent = event => {
+  console.log('has');
   return{
     type: UPDATE_EVENT,
     payload: {event}

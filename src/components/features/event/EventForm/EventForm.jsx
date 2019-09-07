@@ -1,44 +1,26 @@
-import React, { Fragment, useState, useEffect } from "react";
+import React, { Fragment, useState } from "react";
 import { Segment, Form, Button } from "semantic-ui-react";
 import cuid from "cuid";
-import {connect} from 'react-redux';
+import { connect } from "react-redux";
 
 // Redux
-import {createEvent, updateEvent, deleteEvent} from '../../../../actions/events/eventActions';
+import {
+  createEvent,
+  updateEvent
+} from "../../../../actions/events/eventActions";
 
+const EventForm = ({ event, history, createEvent, updateEvent }) => {
+  console.log(event.id);
 
-const EventForm = ({ isOpen, hideForm, newEvent, selectedEvent, updateEvents, createEvent }) => {
-  const [eventTitle, setEventTitle] = useState("");
-  const [eventDate, setEventDate] = useState("");
-  const [eventCity, setEventCity] = useState("");
-  const [eventVenue, setEventVenue] = useState("");
-  const [eventHostedBy, setEventHostedBy] = useState("");
+  const [eventTitle, setEventTitle] = useState(event.title);
+  const [eventDate, setEventDate] = useState(event.date);
+  const [eventCity, setEventCity] = useState(event.city);
+  const [eventVenue, setEventVenue] = useState(event.venue);
+  const [eventHostedBy, setEventHostedBy] = useState(event.hostedBy);
 
   const onChange = (e, name) => {
     name(e.target.value);
   };
-  const renderData = () => {
-    if (selectedEvent !== undefined) {
-      if(selectedEvent !== null){
-        const { title, date, city, venue, hostedBy } = selectedEvent;
-      setEventTitle(title);
-      setEventDate(date);
-      setEventCity(city);
-      setEventVenue(venue);
-      setEventHostedBy(hostedBy);
-    } else {
-      setEventTitle("");
-      setEventDate("");
-      setEventCity("");
-      setEventVenue("");
-      setEventHostedBy("");
-    }
-      }
-  };
-
-  useEffect(() => {
-    renderData();
-  }, [selectedEvent]);
 
   const onSubmit = e => {
     e.preventDefault();
@@ -47,82 +29,97 @@ const EventForm = ({ isOpen, hideForm, newEvent, selectedEvent, updateEvents, cr
       date: eventDate,
       city: eventCity,
       venue: eventVenue,
-      hostedBy: eventHostedBy,
+      hostedBy: eventHostedBy
     };
-    if(selectedEvent === null || selectedEvent === undefined){
-      body.hostPhotoURL= "./assets/images/user.png"
+    if (event.id === undefined) {
+      body.hostPhotoURL = "./assets/images/user.png";
       body.id = cuid();
+      body.attendees = [];
       return createEvent(body);
     }
-    body.id = selectedEvent.id
-    body.hostPhotoURL= selectedEvent.hostPhotoURL;
-    return updateEvents(body);
+    body.id = event.id;
+    body.hostPhotoURL = event.hostPhotoURL;
+    body.attendees = event.attendees;
+    body.description = event.description;
+    body.category = event.category;
+    return updateEvent(body);
   };
 
   const showForm = () => {
-    if (isOpen || isOpen === undefined) {
-      return (
-        <Segment>
-          <Form onSubmit={e => onSubmit(e)} autoComplete="off">
-            <Form.Field>
-              <label>Event Title</label>
-              <input
-                value={eventTitle}
-                placeholder="Event Title"
-                onChange={e => onChange(e, setEventTitle)}
-              />
-            </Form.Field>
-            <Form.Field>
-              <label>Event Date</label>
-              <input
-                value={eventDate}
-                type="date"
-                placeholder="Event Date"
-                onChange={e => onChange(e, setEventDate)}
-              />
-            </Form.Field>
-            <Form.Field>
-              <label>City</label>
-              <input
-                value={eventCity}
-                placeholder="City event is taking place"
-                onChange={e => onChange(e, setEventCity)}
-              />
-            </Form.Field>
-            <Form.Field>
-              <label>Venue</label>
-              <input
-                value={eventVenue}
-                placeholder="Enter the Venue of the event"
-                onChange={e => onChange(e, setEventVenue)}
-              />
-            </Form.Field>
-            <Form.Field>
-              <label>Hosted By</label>
-              <input
-                value={eventHostedBy}
-                placeholder="Enter the name of person hosting"
-                onChange={e => onChange(e, setEventHostedBy)}
-              />
-            </Form.Field>
-            <Button positive type="submit">
-              Submit
-            </Button>
-            <Button
-              type="button"
-              onClick={() => {
-                hideForm();
-              }}
-            >
-              Cancel
-            </Button>
-          </Form>
-        </Segment>
-      );
-    }
-    return null;
+    return (
+      <Segment>
+        <Form onSubmit={e => onSubmit(e)} autoComplete="off">
+          <Form.Field>
+            <label>Event Title</label>
+            <input
+              value={eventTitle}
+              placeholder="Event Title"
+              onChange={e => onChange(e, setEventTitle)}
+            />
+          </Form.Field>
+          <Form.Field>
+            <label>Event Date</label>
+            <input
+              value={eventDate}
+              type="date"
+              placeholder="Event Date"
+              onChange={e => onChange(e, setEventDate)}
+            />
+          </Form.Field>
+          <Form.Field>
+            <label>City</label>
+            <input
+              value={eventCity}
+              placeholder="City event is taking place"
+              onChange={e => onChange(e, setEventCity)}
+            />
+          </Form.Field>
+          <Form.Field>
+            <label>Venue</label>
+            <input
+              value={eventVenue}
+              placeholder="Enter the Venue of the event"
+              onChange={e => onChange(e, setEventVenue)}
+            />
+          </Form.Field>
+          <Form.Field>
+            <label>Hosted By</label>
+            <input
+              value={eventHostedBy}
+              placeholder="Enter the name of person hosting"
+              onChange={e => onChange(e, setEventHostedBy)}
+            />
+          </Form.Field>
+          <Button positive type="submit">
+            Submit
+          </Button>
+          <Button type="button" onClick={history.goBack}>
+            Cancel
+          </Button>
+        </Form>
+      </Segment>
+    );
   };
 
   return <Fragment>{showForm()}</Fragment>;
 };
-export default connect(null,{createEvent})(EventForm);
+
+const mapStateToProps = (state, ownProps) => {
+  const eventId = ownProps.match.params.id;
+  let event = {
+    title: "",
+    date: "",
+    city: "",
+    venue: "",
+    hostBy: ""
+  };
+  if (eventId && state.events.length > 0) {
+    event = state.events.filter(event => event.id === eventId)[0];
+  }
+  return { event };
+};
+
+export default connect(
+  mapStateToProps,
+  { createEvent, updateEvent }
+)(EventForm);

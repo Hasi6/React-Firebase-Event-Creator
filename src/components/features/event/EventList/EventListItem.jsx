@@ -2,8 +2,14 @@ import React from "react";
 import { Segment, Item, Icon, List, Button } from "semantic-ui-react";
 import EventListAttendee from "./EventListAttendee";
 import { Link } from "react-router-dom";
+import {connect} from 'react-redux';
 
-const EventListItem = ({ events, selectEvent, deleteEvent }) => {
+// Redux
+import { deleteEvent } from "../../../../actions/events/eventActions";
+
+
+
+const EventListItem = ({ events, deleteEvent }) => {
   return <Segment.Group>
   <Segment>
     <Item.Group>
@@ -40,8 +46,8 @@ const EventListItem = ({ events, selectEvent, deleteEvent }) => {
   <Segment clearing>
     <span>{events.description}</span>
     <Button as="a" color="red" floated="right" content="Delete" onClick={()=>deleteEvent(events)}/>
-    <Button as={Link} to={`/events/${events.id}`} color="teal" floated="right" content="View" onClick={()=>selectEvent(events)}/>
+    <Button as={Link} to={`/events/${events.id}`} color="teal" floated="right" content="View"/>
   </Segment>
 </Segment.Group>;
 };
-export default EventListItem;
+export default connect(null, {deleteEvent})(EventListItem);

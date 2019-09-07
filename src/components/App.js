@@ -43,7 +43,11 @@ const App = () => {
                       component={UserDetailedPage}
                     />
                     <Route path="/settings" component={SettingsDashBoard} />
-                    <Route path="/createEvent" exact component={EventForm} />
+                    <Route
+                      path={["/createEvent", "/manage/:id"]}
+                      exact
+                      component={EventForm}
+                    />
                   </Switch>
                 </Container>
               </Fragment>
