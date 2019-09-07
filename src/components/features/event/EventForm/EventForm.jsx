@@ -3,6 +3,12 @@ import { Segment, Form, Button, Grid, Header } from "semantic-ui-react";
 import cuid from "cuid";
 import { connect } from "react-redux";
 import { reduxForm, Field } from "redux-form";
+import {
+  composeValidators,
+  combineValidators,
+  isRequired,
+  hasLengthGreaterThan
+} from "revalidate";
 
 // Redux
 import {
@@ -24,13 +30,28 @@ const category = [
   { key: "travel", text: "Travel", value: "travel" }
 ];
 
+const validate = combineValidators({
+  title: isRequired({message: 'Event Title is Required'}),
+  category: isRequired({message: 'Category is Required'}),
+  description: composeValidators(
+    isRequired({message: 'Please Enter a Description'}),
+    hasLengthGreaterThan(4)({message: 'Description needs to be at least 5 Characters'})
+  )(),
+  city: isRequired('city'),
+  venue: isRequired('venue')
+})
+
 const EventForm = ({
   history,
   createEvent,
   updateEvent,
   handleSubmit,
-  initialValues
+  initialValues,
+  invalid,
+  submitting,
+  pristine
 }) => {
+
   const onSubmit = values => {
     if (initialValues.id) {
       updateEvent(values);
@@ -47,6 +68,8 @@ const EventForm = ({
       return history.push(`/events/${value.id}`);
     }
   };
+
+ 
 
   const showForm = () => {
     return (
@@ -77,10 +100,17 @@ const EventForm = ({
               <Field name="city" component={TextInput} placeholder="Location" />
               <Field name="venue" component={TextInput} placeholder="Venue" />
               <Field name="date" component={TextInput} placeholder="Date" />
-              <Button positive type="submit">
+              <Button positive type="submit" disabled={invalid || submitting || pristine}>
                 Submit
               </Button>
-              <Button type="button" onClick={initialValues.id ? ()=> history.push(`/events/${initialValues.id}`) :()=> history.push('/events')}>
+              <Button
+                type="button"
+                onClick={
+                  initialValues.id
+                    ? () => history.push(`/events/${initialValues.id}`)
+                    : () => history.push("/events")
+                }
+              >
                 Cancel
               </Button>
             </Form>
@@ -105,4 +135,4 @@ const mapStateToProps = (state, ownProps) => {
 export default connect(
   mapStateToProps,
   { createEvent, updateEvent }
-)(reduxForm({ form: "eventForm" })(EventForm));
+)(reduxForm({ form: "eventForm", validate })(EventForm));
