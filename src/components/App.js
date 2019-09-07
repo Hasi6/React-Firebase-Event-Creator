@@ -1,5 +1,5 @@
 import React, { Fragment } from "react";
-import { BrowserRouter, Route, Switch } from "react-router-dom";
+import { Route, Switch, withRouter } from "react-router-dom";
 import { Provider } from "react-redux";
 
 // Created Components
@@ -17,10 +17,9 @@ import EventForm from "./features/event/EventForm/EventForm";
 import { configureStore } from "../store/configureStore";
 const store = configureStore;
 
-const App = () => {
+const App = ({location}) => {
   return (
     <Provider store={store}>
-      <BrowserRouter>
         <Fragment>
           <Route path="/" exact component={HomePage} />
           <Route
@@ -29,7 +28,7 @@ const App = () => {
               <Fragment>
                 <NavBar />
                 <Container className="main">
-                  <Switch>
+                  <Switch key={location.key}>
                     <Route path="/events" exact component={EventDashboard} />
                     <Route
                       path="/events/:id"
@@ -54,8 +53,7 @@ const App = () => {
             )}
           />
         </Fragment>
-      </BrowserRouter>
     </Provider>
   );
 };
-export default App;
+export default withRouter(App);
