@@ -7,7 +7,6 @@ import LoginModal from "./LoginModal";
 import RegisterModal from "./RegisterModal";
 
 const ModalManager = ({ currentModal }) => {
-  console.log(currentModal);
   const renderModals = () => {
     if (currentModal) {
       switch (currentModal.modalType) {

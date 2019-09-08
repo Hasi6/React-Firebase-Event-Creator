@@ -1,21 +1,19 @@
 import React from "react";
 import { Menu, Button } from "semantic-ui-react";
-import { openModal } from "../../../actions/modals/modalActions";
-import {connect} from 'react-redux'
 
-const SignedOutMenu = ({signIn, openModal}) => {
+const SignedOutMenu = ({signIn, register}) => {
   return (
     <Menu.Item position="right">
-      <Button basic inverted content="Login" onClick={()=>openModal('Login Modal')}/>
+      <Button basic inverted content="Login" onClick={()=>signIn()}/>
       <Button
         basic
         inverted
         content="Register"
         style={{ marginLeft: "0.5em" }}
-        onClick={()=>openModal('Register Modal')}
+        onClick={()=>register()}
       />
     </Menu.Item>
   );
 };
 
-export default connect(null, {openModal})(SignedOutMenu);
+export default SignedOutMenu;
