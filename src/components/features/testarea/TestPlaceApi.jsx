@@ -5,14 +5,20 @@ import PlacesAutocomplete, {
 } from "react-places-autocomplete";
 import SimpleMap from "./SimpleMap";
 import DateTimePickerTest from "./DateTimePickerTest";
+import { connect } from "react-redux";
+import { openModal } from "../../../actions/modals/modalActions";
+import { Button } from "semantic-ui-react";
 
 class TestPlaceApi extends React.Component {
   constructor(props) {
     super(props);
-    this.state = { address: "",latLng: {
-      lat: '',
-      lng: ''
-    } };
+    this.state = {
+      address: "",
+      latLng: {
+        lat: "",
+        lng: ""
+      }
+    };
   }
 
   handleChange = address => {
@@ -21,15 +27,29 @@ class TestPlaceApi extends React.Component {
 
   handleSelect = address => {
     geocodeByAddress(address)
-    .then(results => getLatLng(results[0]))
-    .then(latLng => this.setState({latLng}))
-    .catch(error => console.error("Error", error));
+      .then(results => getLatLng(results[0]))
+      .then(latLng => this.setState({ latLng }))
+      .catch(error => console.error("Error", error));
   };
 
   render() {
-    console.log(this.state);
     return (
       <Fragment>
+        <Button
+          color="teal"
+          content="Test Model"
+          onClick={() => this.props.openModal("Test Modal", { data: 42 })}
+        />
+        <Button
+          color="teal"
+          content="Login Model"
+          onClick={() => this.props.openModal("Login Modal", { data: 42 })}
+        />
+        <Button
+          color="teal"
+          content="Register Model"
+          onClick={() => this.props.openModal("Register Modal", { data: 42 })}
+        />
         <PlacesAutocomplete
           value={this.state.address}
           onChange={this.handleChange}
@@ -73,11 +93,14 @@ class TestPlaceApi extends React.Component {
             </div>
           )}
         </PlacesAutocomplete>
-        <SimpleMap key={this.state.latLng.lat} latLng={this.state.latLng}/>
+        <SimpleMap key={this.state.latLng.lat} latLng={this.state.latLng} />
         <DateTimePickerTest />
       </Fragment>
     );
   }
 }
 
-export default TestPlaceApi;
+export default connect(
+  null,
+  { openModal }
+)(TestPlaceApi);

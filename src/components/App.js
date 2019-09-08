@@ -16,45 +16,47 @@ import EventForm from "./features/event/EventForm/EventForm";
 // Redux Store
 import { configureStore } from "../store/configureStore";
 import TestPlaceApi from "./features/testarea/TestPlaceApi";
+import ModalManager from "./features/modals/ModalManager";
 const store = configureStore;
 
-const App = ({location}) => {
+const App = ({ location }) => {
   return (
     <Provider store={store}>
-        <Fragment>
-          <Route path="/" exact component={HomePage} />
-          <Route
-            path="/(.+)"
-            render={() => (
-              <Fragment>
-                <NavBar />
-                <Container className="main">
-                  <Switch key={location.key}>
-                    <Route path="/events" exact component={EventDashboard} />
-                    <Route
-                      path="/events/:id"
-                      exact
-                      component={EventDetailsPage}
-                    />
-                    <Route path="/people" exact component={PeopleDashBoard} />
-                    <Route
-                      path="/profile/:id"
-                      exact
-                      component={UserDetailedPage}
-                    />
-                    <Route path="/settings" component={SettingsDashBoard} />
-                    <Route
-                      path={["/createEvent", "/manage/:id"]}
-                      exact
-                      component={EventForm}
-                    />
-                    <Route path="/test" exact component={TestPlaceApi} />
-                  </Switch>
-                </Container>
-              </Fragment>
-            )}
-          />
-        </Fragment>
+      <Fragment>
+        <Route path="/" exact component={HomePage} />
+        <Route
+          path="/(.+)"
+          render={() => (
+            <Fragment>
+              <ModalManager />
+              <NavBar />
+              <Container className="main">
+                <Switch key={location.key}>
+                  <Route path="/events" exact component={EventDashboard} />
+                  <Route
+                    path="/events/:id"
+                    exact
+                    component={EventDetailsPage}
+                  />
+                  <Route path="/people" exact component={PeopleDashBoard} />
+                  <Route
+                    path="/profile/:id"
+                    exact
+                    component={UserDetailedPage}
+                  />
+                  <Route path="/settings" component={SettingsDashBoard} />
+                  <Route
+                    path={["/createEvent", "/manage/:id"]}
+                    exact
+                    component={EventForm}
+                  />
+                  <Route path="/test" exact component={TestPlaceApi} />
+                </Switch>
+              </Container>
+            </Fragment>
+          )}
+        />
+      </Fragment>
     </Provider>
   );
 };
