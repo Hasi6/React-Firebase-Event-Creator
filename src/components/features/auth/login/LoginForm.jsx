@@ -8,7 +8,6 @@ import TextInput from "../../../../common/form/TextInput";
 import { login } from "../../../../actions/auth/authActions";
 
 const LoginForm = ({ login, handleSubmit }) => {
-  console.log(login);
   return (
     <Form error size="large" onSubmit={handleSubmit(login)}>
       <Segment>

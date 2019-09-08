@@ -21,7 +21,6 @@ const EventDetailsHeader = ({ events }) => {
                   content={events.title}
                   style={{ color: "white" }}
                 />
-                <p>{events.date}</p>
                 <p>
                   Hosted by <strong>{events.hostedBy}</strong>
                 </p>

@@ -15,9 +15,12 @@ import EventForm from "./features/event/EventForm/EventForm";
 
 // Redux Store
 import { configureStore } from "../store/configureStore";
-import TestPlaceApi from "./features/testarea/TestPlaceApi";
 import ModalManager from "./features/modals/ModalManager";
+import TestComponent from "./features/testarea/TestComponent";
+// import { loadEvents } from "../actions/events/eventActions";
 const store = configureStore;
+
+// store.dispatch(loadEvents())
 
 const App = ({ location }) => {
   return (
@@ -50,7 +53,7 @@ const App = ({ location }) => {
                     exact
                     component={EventForm}
                   />
-                  <Route path="/test" exact component={TestPlaceApi} />
+                  <Route path="/test" exact component={TestComponent} />
                 </Switch>
               </Container>
             </Fragment>

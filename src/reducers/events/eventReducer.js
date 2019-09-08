@@ -1,8 +1,6 @@
-import Events from "../../components/features/event/EventDashboard/EventListArray";
 import { createReducer } from "../../common/util/reducerUtil";
-import { CREATE_EVENT, DELETE_EVENT, UPDATE_EVENT } from "../../types/Types";
-
-const initialState = Events;
+import { CREATE_EVENT, DELETE_EVENT, UPDATE_EVENT, FETCH_EVENTS } from "../../types/Types";
+const initialState = [];
 
 const createEvent = (state, payload) => {
   return [...state, payload.event];
@@ -21,8 +19,13 @@ const deleteEvent = (state, payload) => {
   
 };
 
+const fetchEvents = (state, payload)=>{
+  return payload.events
+}
+
 export default createReducer(initialState, {
   [CREATE_EVENT]: createEvent,
   [UPDATE_EVENT]: updateEvent,
-  [DELETE_EVENT]: deleteEvent
+  [DELETE_EVENT]: deleteEvent,
+  [FETCH_EVENTS]: fetchEvents
 });

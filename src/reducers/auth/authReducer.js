@@ -7,7 +7,6 @@ const initialState = {
 }
 
 const loginUser = (state, payload)=>{
-    console.log(payload);
     return {
         authenticated: true,
         currentUser: payload.email
