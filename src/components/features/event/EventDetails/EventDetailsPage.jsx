@@ -9,6 +9,7 @@ import EventsDetailsChat from "./EventsDetailsChat";
 import EventDetailsSideBar from "./EventDetailsSideBar";
 
 const EventDetailsPage = ({ event }) => {
+  console.log(event);
   return (
     <Fragment>
       {event !== undefined ? (
@@ -30,9 +31,12 @@ const EventDetailsPage = ({ event }) => {
 const mapStateToProps = (state, ownProps) => {
   const eventId = ownProps.match.params.id;
   let event = {};
-  if (eventId && state.events.length > 0) {
-    event = state.events.filter(event => event.id === eventId)[0];
+  console.log(state.firestore.ordered.events);
+  if (eventId && state.firestore.ordered.events && state.firestore.ordered.events.length > 0) {
+    console.log('Hasi');
+    event = state.firestore.ordered.events.filter(event => event.id === eventId)[0];
   }
+  console.log(eventId);
   return { event };
 };
 

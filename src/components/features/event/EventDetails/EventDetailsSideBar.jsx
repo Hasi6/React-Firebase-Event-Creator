@@ -21,9 +21,9 @@ const EventDetailsSideBar = ({ attendees }) => {
       <Segment attached>
         <Item.Group divided>
           {attendees &&
-            attendees.map(attendees => {
+            Object.values(attendees).map((attendees, index) => {
               return (
-                <Item key={attendees.id} style={{ position: "relative" }}>
+                <Item key={index} style={{ position: "relative" }}>
                   {isHost && (
                     <Label
                       style={{ position: "absolute" }}
