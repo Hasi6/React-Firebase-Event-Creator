@@ -18,10 +18,8 @@ import EventForm from "./features/event/EventForm/EventForm";
 import { configureStore } from "../store/configureStore";
 import ModalManager from "./features/modals/ModalManager";
 import TestComponent from "./features/testarea/TestComponent";
-import { loadEvents } from "../actions/events/eventActions";
 const store = configureStore;
 
-store.dispatch(loadEvents())
 
 const App = ({ location }) => {
   return (
