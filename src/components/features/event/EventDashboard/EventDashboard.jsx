@@ -8,9 +8,6 @@ import { loadEvents } from "../../../../actions/events/eventActions";
 import LoadingComponent from "../../../../common/loading/LoadingComponent";
 
 const EventDashboard = ({ events, loadEvents, loading }) => {
-  if (events.length === 0) {
-    loadEvents();
-  }
   return (
     <Grid>
       {loading ? (

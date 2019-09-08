@@ -5,16 +5,19 @@ const EventDetailsSideBar = ({ attendees }) => {
   const isHost = false;
   return (
     <Fragment>
-      <Segment
-        textAlign="center"
-        style={{ border: "none" }}
-        attached="top"
-        secondary
-        inverted
-        color="teal"
-      >
-        {attendees.length} {attendees.length === 1 ? 'Person' : 'Peoples'} are going
-      </Segment>
+      {attendees && (
+        <Segment
+          textAlign="center"
+          style={{ border: "none" }}
+          attached="top"
+          secondary
+          inverted
+          color="teal"
+        >
+          {attendees.length} {attendees.length === 1 ? "Person" : "Peoples"} are
+          going
+        </Segment>
+      )}
       <Segment attached>
         <Item.Group divided>
           {attendees &&

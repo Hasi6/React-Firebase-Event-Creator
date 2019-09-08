@@ -1,6 +1,7 @@
 import React, { Fragment } from "react";
 import { Route, Switch, withRouter } from "react-router-dom";
 import { Provider } from "react-redux";
+import ReduxToastr from "react-redux-toastr";
 
 // Created Components
 import EventDashboard from "./features/event/EventDashboard/EventDashboard";
@@ -17,10 +18,10 @@ import EventForm from "./features/event/EventForm/EventForm";
 import { configureStore } from "../store/configureStore";
 import ModalManager from "./features/modals/ModalManager";
 import TestComponent from "./features/testarea/TestComponent";
-// import { loadEvents } from "../actions/events/eventActions";
+import { loadEvents } from "../actions/events/eventActions";
 const store = configureStore;
 
-// store.dispatch(loadEvents())
+store.dispatch(loadEvents())
 
 const App = ({ location }) => {
   return (
@@ -31,6 +32,15 @@ const App = ({ location }) => {
           path="/(.+)"
           render={() => (
             <Fragment>
+              <ReduxToastr
+                position="bottom-right"
+                transitionIn="fadeIn"
+                transitionOut="fadeOut"
+                timeOut={5000}
+                progressBar
+                preventDuplicates
+                closeOnToastrClick
+              />
               <ModalManager />
               <NavBar />
               <Container className="main">

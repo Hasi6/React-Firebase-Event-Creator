@@ -2,7 +2,7 @@ const SampleData = [
     {
       id: "1",
       title: "Trip to Empire State building",
-      date: "2001-09-28",
+      date: "2001-09-28T18:00:00",
       category: "culture",
       description:
         "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus sollicitudin ligula eu leo tincidunt, quis scelerisque magna dapibus. Sed eget ipsum vel arcu vehicula ullamcorper.",
@@ -30,7 +30,7 @@ const SampleData = [
     {
       id: "2",
       title: "Trip to Punch and Judy Pub",
-      date: "2001-09-28",
+      date: "2001-09-28T19:00:00",
       category: "drinks",
       description:
         "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus sollicitudin ligula eu leo tincidunt, quis scelerisque magna dapibus. Sed eget ipsum vel arcu vehicula ullamcorper.",
