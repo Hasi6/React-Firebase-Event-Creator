@@ -8,7 +8,7 @@
     "firebase": "^6.0.2",
     "globalize": "^1.4.2",
     "google-map-react": "^1.1.4",
-    "moment": "^2.22.0",
+    "moment": "^2.29.2",
     "rc-datepicker": "^5.0.14",
     "react": "^16.9.0",
     "react-cropper": "^1.2.0",
